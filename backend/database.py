@@ -24,8 +24,19 @@ def init_db():
 
 
 def insert_dataset(filename: str, file_hash: str):
-    conn = get_connection()
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
+
+    # Check if dataset already exists
+    cursor.execute(
+        "SELECT 1 FROM datasets WHERE filename = ?",
+        (filename,)
+    )
+    exists = cursor.fetchone()
+
+    if exists:
+        conn.close()
+        return False  # already exists
 
     cursor.execute(
         "INSERT INTO datasets (filename, file_hash) VALUES (?, ?)",
@@ -34,3 +45,20 @@ def insert_dataset(filename: str, file_hash: str):
 
     conn.commit()
     conn.close()
+    return True
+
+
+
+def get_hash_by_filename(filename: str):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT file_hash FROM datasets WHERE filename = ? ORDER BY uploaded_at DESC LIMIT 1",
+        (filename,)
+    )
+    row = cursor.fetchone()
+    conn.close()
+
+    return row[0] if row else None
+
