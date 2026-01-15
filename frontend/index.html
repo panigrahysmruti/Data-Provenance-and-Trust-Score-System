@@ -1,13 +1,34 @@
-<h2>Dataset Upload & Verification</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dataset Provenance</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
 
-<form id="uploadForm">
-  <input type="file" id="fileInput" required />
-  <br /><br />
+  <div class="container">
+    <div class="card">
+      <h1>Dataset Provenance</h1>
+      <p class="subtitle">Upload once. Verify integrity anytime.</p>
 
-  <button type="submit">Upload</button>
-  <button type="button" id="verifyBtn">Verify</button>
-</form>
+      <!-- File picker -->
+      <div class="file-box" id="fileBox">
+        <input type="file" id="fileInput" hidden />
+        <span id="fileLabel">Choose dataset file</span>
+      </div>
 
-<pre id="result"></pre>
+      <!-- Buttons -->
+      <div class="buttons">
+        <button id="uploadBtn" disabled>Upload</button>
+        <button id="verifyBtn" disabled>Verify</button>
+      </div>
 
-<script src="script.js"></script>
+      <!-- Status -->
+      <div id="statusBox" class="status hidden"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
